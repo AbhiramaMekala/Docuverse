@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Docuverse Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for sidebar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #8b5cf6;
+            border-radius: 20px;
+            border: 3px solid transparent;
+            background-clip: content-box;
+        }
+
+        /* Dotted border style */
+        .dotted-border {
+            border-style: dashed;
+            border-color: #7c3aed;
+            border-width: 2.5px;
+            border-radius: 0.75rem;
+        }
+
+        /* Solid purple buttons dotted border */
+        .dotted-border-solid {
+            border-style: dotted;
+            border-color: #7c3aed;
+            border-width: 2.5px;
+            border-radius: 0.75rem;
+            background-color: #7c3aed;
+            color: white;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+
+        .dotted-border-solid:hover {
+            background-color: #5b21b6;
+            cursor: pointer;
+        }
+
+        /* Outlined button with no fill */
+        .dotted-border-outline {
+            background-color: transparent;
+            color: #4b5563;
+            font-weight: 700;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dotted-border-outline:hover {
+            background-color: #7c3aed;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Custom badge style for File Type */
+        .file-badge {
+            font-weight: 700;
+            border-radius: 9999px;
+            padding: 0.15rem 0.7rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            user-select: none;
+            color: white;
+        }
+
+        /* File Type Specific Badges */
+        .pdf-badge {
+            background-color: #ef4444;
+            /* red-500 */
+        }
+
+        .docx-badge {
+            background-color: #0284c7;
+            /* sky-600 */
+        }
+
+        .xlsx-badge {
+            background-color: #10b981;
+            /* emerald-500 */
+        }
+
+        .pptx-badge {
+            background-color: #f59e0b;
+            /* amber-500 */
+        }
+
+        .txt-badge {
+            background-color: #6b7280;
+            /* gray-500 */
+        }
+
+        .csv-badge {
+            background-color: #22c55e;
+            /* green-500 */
+        }
+
+        .zip-badge {
+            background-color: #a855f7;
+            /* violet-500 */
+        }
+
+        .audio-badge {
+            background-color: #14b8a6;
+            /* teal-500 */
+        }
+
+        .video-badge {
+            background-color: #f43f5e;
+            /* rose-500 */
+        }
+
+        .code-badge {
+            background-color: #0ea5e9;
+            /* sky-400 */
+        }
+
+        .json-badge {
+            background-color: #7c3aed;
+            /* purple-500 */
+        }
+
+        .xml-badge {
+            background-color: #d946ef;
+            /* fuchsia-500 */
+        }
+
+        .image-badge {
+            background-color: #8b5cf6;
+            /* indigo-500 */
+        }
+
+        .default-badge {
+            background-color: #9ca3af;
+            /* gray-400 */
+        }
+
+
+        /* Search input with icon inside on right */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 3rem 0.75rem 1.25rem;
+            font-size: 1rem;
+            border: 1.5px solid #6b7280;
+            border-radius: 1rem;
+            outline-offset: 2px;
+            outline-color: #ddd6fe;
+            transition: outline-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline-color: #a78bfa;
+        }
+
+        .search-icon-circle {
+            position: absolute;
+            top: 50%;
+            right: 0.75rem;
+            transform: translateY(-50%);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            border: 1.5px solid #6b7280;
+            background: repeating-conic-gradient(#9ca3af 0deg 45deg, transparent 45deg 90deg);
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+
+
+        /* Card shadow focus */
+        .card-shadow {
+            box-shadow:
+                0 4px 6px -1px rgb(124 58 237 / 0.4),
+                0 2px 4px -2px rgb(124 58 237 / 0.3);
+        }
+
+        .nav-link.active {
+            background-color: #c084fc;
+            /* a deeper purple */
+            color: #4c1d95;
+            /* darker text */
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="flex min-h-screen font-sans bg-white text-gray-900">
+    <!-- Sidebar -->
+
+    <aside class="fixed top-0 left-0 h-full flex flex-col w-56 bg-purple-200 z-40">
+        <div class="flex items-center h-20 px-6 bg-purple-300 border-b border-purple-300">
+            <div class="flex items-center space-x-2">
+                <div
+                    class="w-10 h-10 rounded-lg bg-purple-400 flex items-center justify-center text-white font-bold text-lg select-none">
+                    D
+                </div>
+                <span class="text-lg font-semibold tracking-tight">Docuverse</span>
+            </div>
+        </div>
+        <nav class="flex flex-col flex-grow px-6 py-8 space-y-6 overflow-y-auto">
+            <a href="/afterlogin"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded sidebar-active hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 3l9 8v10a1 1 0 01-1 1h-6v-7H10v7H4a1 1 0 01-1-1V11l9-8z" />
+                </svg>
+                <span>Home</span>
+            </a>
+            <a href="/files"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path d="M17 3h-7a2 2 0 00-2 2v6h2V6h5v3l4-3-4-3v2zM7 17v4h10v-4h-2v2H9v-2H7z" />
+                </svg>
+                <span class="font-semibold">Files</span>
+            </a>
+            <a href="/aichat"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path
+                        d="M11 12h2l-5 7v-5H3v-4h5V5l5 7zM18 13.1l-1.06-.53a6 6 0 011.69-2.71L21 8a1 1 0 010 2l-2.13 3.1zM14 17a4 4 0 110-8 4 4 0 010 8z" />
+                </svg>
+                <span class="font-semibold">Docu-AI</span>
+            </a>
+            <a href="#"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path d="M9 12l-3-3 3-3v2h3v2H9v2zm6 4l-3-3 3-3v2h3v2h-3v2zM3 20h18v-2H3v2z" />
+                </svg>
+                <span class="font-semibold">Share</span>
+            </a>
+            <a href="#"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path
+                        d="M6 14h12v-4H6v4zm-3 1v-4a1 1 0 011-1h18a1 1 0 011 1v4H3zm2-6h14v2H5v-2zm9-3v1h4v2h-4v4h-2v-4H7v-2h4v-1h2z" />
+                </svg>
+                <span class="font-semibold" onclick="window.location.href='manage.html'">Manage</span>
+            </a>
+        </nav>
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="flex-grow p-8">
+        <!-- Search and profile top row -->
+
+        <!-- Top Bar: Search + Logout -->
+        <div class="flex items-center justify-between mb-8 max-w-5xl mx-auto space-x-4">
+            <!-- Search Form -->
+            <form method="GET" action="/afterlogin" class="flex-grow">
+                <input type="search" name="q" value="<%= query || '' %>" placeholder="Search for Anything!"
+                    class="w-full border border-gray-300 rounded-xl py-3 px-5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+                    aria-label="Search for anything" />
+            </form>
+
+            <!-- Logout Button -->
+            <form action="/logout" method="post">
+                <button type="submit"
+                    class="bg-white text-black border border-gray-300 px-4 py-2 rounded-lg font-bold hover:bg-gray-100 transition">
+                    Logout
+                </button>
+            </form>
+        </div>
+
+
+        <!-- Action Buttons and dashboard -->
+        <div class="max-w-5xl mx-auto grid grid-cols-3 gap-6 mb-10">
+            <form action="/upload" method="POST" enctype="multipart/form-data" id="uploadForm" style="display: none;">
+                <input type="file" id="fileInput" name="files" accept=".pdf,.doc,.docx,.ppt,.pptx,image/*,video/*"
+                    multiple hidden>
+            </form>
+
+            <!-- Custom Trigger (can be icon, text, etc.) -->
+
+
+
+            <button type="button" id="uploadTrigger"
+                class="dotted-border dotted-border-outline flex items-center justify-center text-lg font-semibold py-8">
+                + Upload Files
+            </button>
+
+            <button
+                class="dotted-border dotted-border-outline flex items-center justify-center text-lg font-semibold py-8">
+                select
+            </button>
+
+            <section class="rounded-lg bg-white p-6 border border-blue-200 shadow-md card-shadow">
+                <h2 class="font-bold text-lg mb-2 text-gray-900">Welcome,</h2>
+                <p class="text-gray-500 text-sm">
+                    <%= name %>
+                </p>
+            </section>
+            <button class="dotted-border-solid py-6 px-10 text-center">
+                AI Summarizer
+            </button>
+            <button class="dotted-border-solid py-6 px-10 text-center">
+                Important Dates
+            </button>
+            <div></div>
+        </div>
+
+        <!-- Recent Files Table -->
+        <div class="max-w-5xl mx-auto">
+            <h3 class="font-semibold text-xl mb-2">Recent</h3>
+
+            <table class="min-w-full border-collapse border border-gray-300">
+                <thead class="bg-purple-100">
+                    <tr class="text-xs font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">
+                        <th class="py-4 px-4 text-left">File Name</th>
+                        <th class="py-4 px-4 text-left">Type</th>
+                        <th class="py-4 px-4 text-left">Date Modified</th>
+                        <th class="py-4 px-4 text-left">Uploaded By</th>
+                        <th class="py-4 px-4 text-left"></th>
+                        <th class="py-4 px-4 text-left"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% files.forEach(file=> {
+                        const ext = file.originalname.split('.').pop().toLowerCase();
+                        let badgeClass = '';
+
+                        switch (ext) {
+                        case 'pdf': badgeClass = 'pdf-badge'; break;
+                        case 'doc':
+                        case 'docx': badgeClass = 'docx-badge'; break;
+                        case 'xls':
+                        case 'xlsx': badgeClass = 'xlsx-badge'; break;
+                        case 'ppt':
+                        case 'pptx': badgeClass = 'pptx-badge'; break;
+                        case 'txt': badgeClass = 'txt-badge'; break;
+                        case 'csv': badgeClass = 'csv-badge'; break;
+                        case 'zip':
+                        case 'rar': badgeClass = 'zip-badge'; break;
+                        case 'mp3':
+                        case 'wav': badgeClass = 'audio-badge'; break;
+                        case 'mp4':
+                        case 'mkv': badgeClass = 'video-badge'; break;
+                        case 'js':
+                        case 'py':
+                        case 'java':
+                        case 'cpp': badgeClass = 'code-badge'; break;
+                        case 'json': badgeClass = 'json-badge'; break;
+                        case 'xml': badgeClass = 'xml-badge'; break;
+                        case 'jpg':
+                        case 'jpeg':
+                        case 'png':
+                        case 'gif': badgeClass = 'image-badge'; break;
+                        default: badgeClass = 'default-badge'; break;
+                        }
+                        %>
+                        <tr class="border border-gray-200 rounded-lg hover:bg-purple-50 transition-colors">
+                            <td class="py-4 px-4">
+                                <%= file.originalname %>
+                            </td>
+                            <td class="py-4 px-4">
+                                <span class="file-badge <%= badgeClass %>">.<%= ext.toUpperCase() %></span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <%= file.uploadDate.toLocaleString() %>
+                            </td>
+
+                            <!-- ✅ FIXED: Show uploader's name -->
+                            <td class="py-4 px-4">
+                                <%= file.userName %>
+                            </td>
+
+                            <td class="py-4 px-4">
+                                <form action="/delete/<%= file._id %>" method="POST"
+                                    onsubmit="return confirm('Do you want to delete this file?')">
+                                    <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                                </form>
+                            </td>
+                            <td class="py-4 px-4 flex gap-4">
+                                <a href="/download/<%= file.filename %>"
+                                    class="text-blue-600 hover:underline">Download</a>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+
+
+
+            </table>
+
+        </div>
+    </main>
+    <script>
+        const links = document.querySelectorAll('.nav-link');
+        const currentPath = window.location.pathname;
+
+        links.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+        const uploadTrigger = document.getElementById('uploadTrigger');
+        const fileInput = document.getElementById('fileInput');
+        const uploadForm = document.getElementById('uploadForm');
+
+        uploadTrigger.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                uploadForm.submit();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

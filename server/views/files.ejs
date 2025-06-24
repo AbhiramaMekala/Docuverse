@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Docuverse - Manage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for storage progress bar container */
+        .progress-bar-bg {
+            background: #f0f2ff;
+            border-radius: 12px;
+        }
+
+        /* Custom colors for storage segments */
+        .pdf-storage {
+            background-color: #ef4444;
+        }
+
+        /* Red */
+        .pptx-storage {
+            background-color: #fbbf24;
+        }
+
+        /* Yellow */
+        .photos-storage {
+            background-color: #c76e18;
+        }
+
+        /* Dark Orange */
+        .free-storage {
+            background-color: #6b7280;
+        }
+
+        /* Gray */
+        /* Hide the default input file */
+        input[type=file] {
+            display: none;
+        }
+
+        .nav-link.active {
+            background-color: #c084fc;
+            /* a deeper purple */
+            color: #4c1d95;
+            /* darker text */
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="flex min-h-screen font-sans bg-white text-gray-900">
+
+    <!-- Sidebar -->
+    <aside class="flex flex-col w-56 bg-purple-200">
+        <div class="flex items-center h-20 px-6 bg-purple-300 border-b border-purple-300">
+            <div class="flex items-center space-x-2">
+                <div
+                    class="w-10 h-10 rounded-lg bg-purple-400 flex items-center justify-center text-white font-bold text-lg select-none">
+                    D</div>
+                <span class="text-lg font-semibold tracking-tight">Docuverse</span>
+            </div>
+        </div>
+        <nav class="flex flex-col flex-grow px-6 py-8 space-y-6 overflow-y-auto">
+            <a href="/afterlogin"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded sidebar-active hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 3l9 8v10a1 1 0 01-1 1h-6v-7H10v7H4a1 1 0 01-1-1V11l9-8z" />
+                </svg>
+                <span>Home</span>
+            </a>
+            <a href="/files"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path d="M17 3h-7a2 2 0 00-2 2v6h2V6h5v3l4-3-4-3v2zM7 17v4h10v-4h-2v2H9v-2H7z" />
+                </svg>
+                <span class="font-semibold">Files</span>
+            </a>
+            <a href="/aichat"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path
+                        d="M11 12h2l-5 7v-5H3v-4h5V5l5 7zM18 13.1l-1.06-.53a6 6 0 011.69-2.71L21 8a1 1 0 010 2l-2.13 3.1zM14 17a4 4 0 110-8 4 4 0 010 8z" />
+                </svg>
+                <span class="font-semibold">Docu-AI</span>
+            </a>
+            <a href="#"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path d="M9 12l-3-3 3-3v2h3v2H9v2zm6 4l-3-3 3-3v2h3v2h-3v2zM3 20h18v-2H3v2z" />
+                </svg>
+                <span class="font-semibold">Share</span>
+            </a>
+            <a href="#"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path
+                        d="M6 14h12v-4H6v4zm-3 1v-4a1 1 0 011-1h18a1 1 0 011 1v4H3zm2-6h14v2H5v-2zm9-3v1h4v2h-4v4h-2v-4H7v-2h4v-1h2z" />
+                </svg>
+                <span class="font-semibold" onclick="window.location.href='manage.html'">Manage</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex flex-col flex-grow p-8">
+        <!-- Search bar and user icon -->
+        <header class="flex items-center gap-6 mb-8">
+            <input type="search" placeholder="Search for Anything!"
+                class="flex-grow border border-gray-300 rounded-xl py-3 px-5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+                aria-label="Search for anything" />
+            <div style="margin-left: 40px;">
+                <form action="/logout" method="post">
+                    <button type="submit" style="
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    ">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </header>
+
+        <!-- Storage Card -->
+        <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-lg font-semibold mb-4">📦 Storage Usage</h2>
+
+            <!-- Progress Bar -->
+
+            <!-- Usage Breakdown Text -->
+            <ul class="text-gray-800 space-y-2 text-sm">
+                <li>📄 <strong>PDF + Docs + Others:</strong>
+                    <%= ((usage.pdf + usage.docs + usage.others) / (1024 * 1024)).toFixed(2) %> MB
+                </li>
+                <li>📊 <strong>PPTX Files:</strong>
+                    <%= (usage.ppts / (1024 * 1024)).toFixed(2) %> MB
+                </li>
+                <li>🖼️ <strong>Photos & Videos:</strong>
+                    <%= ((usage.photos + usage.videos) / (1024 * 1024)).toFixed(2) %> MB
+                </li>
+                <li>📦 <strong>Free Space:</strong>
+                    <%= (usage.free / (1024 * 1024)).toFixed(2) %> MB
+                </li>
+                <li>💾 <strong>Total Used:</strong>
+                    <%= (usage.total / (1024 * 1024)).toFixed(2) %> MB
+                </li>
+                <li>🧮 <strong>Storage:</strong>
+                    <%= (maxStorage / (1024 * 1024)).toFixed(2) %> MB
+                </li>
+            </ul>
+        </section>
+
+
+
+        <!-- Review & Delete Section -->
+        <section class="max-w-4xl w-full">
+            <h3 class="text-lg font-bold mb-3">Review &amp; Delete</h3>
+            <p
+                class="text-center text-gray-400 italic select-none py-12 border border-dashed border-gray-200 rounded-lg">
+                Any AI-Suggested Files to be Deleted will appear here.
+            </p>
+        </section>
+
+    </main>
+    <script>
+        const links = document.querySelectorAll('.nav-link');
+        const currentPath = window.location.pathname;
+
+        links.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

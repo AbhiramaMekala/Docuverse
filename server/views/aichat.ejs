@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Docuverse - Docu-AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for sidebar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #a78bfa;
+            /* Tailwind violet-400 */
+            border-radius: 3px;
+        }
+
+        /* Input text area scrollbar */
+        textarea::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background-color: #a78bfa;
+            border-radius: 3px;
+        }
+
+        .nav-link.active {
+            background-color: #c084fc;
+            /* a deeper purple */
+            color: #4c1d95;
+            /* darker text */
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="bg-[#210e41] min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="flex flex-col w-56 bg-purple-200">
+        <div class="flex items-center h-20 px-6 bg-purple-300 border-b border-purple-300">
+            <div class="flex items-center space-x-2">
+                <div
+                    class="w-10 h-10 rounded-lg bg-purple-400 flex items-center justify-center text-white font-bold text-lg select-none">
+                    D</div>
+                <span class="text-lg font-semibold tracking-tight">Docuverse</span>
+            </div>
+        </div>
+        <nav class="flex flex-col flex-grow px-6 py-8 space-y-6 overflow-y-auto">
+            <a href="/afterlogin"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded sidebar-active hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 3l9 8v10a1 1 0 01-1 1h-6v-7H10v7H4a1 1 0 01-1-1V11l9-8z" />
+                </svg>
+                <span>Home</span>
+            </a>
+            <a href="/files"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path d="M17 3h-7a2 2 0 00-2 2v6h2V6h5v3l4-3-4-3v2zM7 17v4h10v-4h-2v2H9v-2H7z" />
+                </svg>
+                <span class="font-semibold">Files</span>
+            </a>
+            <a href="/aichat"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path
+                        d="M11 12h2l-5 7v-5H3v-4h5V5l5 7zM18 13.1l-1.06-.53a6 6 0 011.69-2.71L21 8a1 1 0 010 2l-2.13 3.1zM14 17a4 4 0 110-8 4 4 0 010 8z" />
+                </svg>
+                <span class="font-semibold">Docu-AI</span>
+            </a>
+            <a href="#"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path d="M9 12l-3-3 3-3v2h3v2H9v2zm6 4l-3-3 3-3v2h3v2h-3v2zM3 20h18v-2H3v2z" />
+                </svg>
+                <span class="font-semibold">Share</span>
+            </a>
+            <a href="#"
+                class="nav-link ... flex items-center space-x-3 p-2 rounded hover:bg-purple-300 hover:text-purple-900 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-purple-600" viewBox="0 0 24 24">
+                    <path
+                        d="M6 14h12v-4H6v4zm-3 1v-4a1 1 0 011-1h18a1 1 0 011 1v4H3zm2-6h14v2H5v-2zm9-3v1h4v2h-4v4h-2v-4H7v-2h4v-1h2z" />
+                </svg>
+                <span class="font-semibold" onclick="window.location.href='manage.html'">Manage</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col px-10 relative">
+        <h1 class="text-4xl font-extrabold mb-4 select-none text-white text-center">How May I Help You?</h1>
+
+        <!-- Chat History Scrollable Area -->
+        <div class="flex-1 overflow-y-auto space-y-4 w-full max-w-2xl mx-auto mb-4 pr-2" id="chat-history">
+            <% if (chatHistory && chatHistory.length> 0) { %>
+                <% chatHistory.forEach(item=> { %>
+                    <!-- User message -->
+                    <div class="text-right">
+                        <div class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg max-w-xl">
+                            <%= item.prompt %>
+                        </div>
+                    </div>
+                    <!-- AI response -->
+                    <div class="text-left">
+                        <div class="inline-block bg-gray-200 text-black px-4 py-2 rounded-lg max-w-xl">
+                            <%= item.answer %>
+                        </div>
+                    </div>
+                    <% }) %>
+                        <% } %>
+                            <% if (error) { %>
+                                <div class="text-red-500 font-semibold text-center">
+                                    <%= error %>
+                                </div>
+                                <% } %>
+        </div>
+
+        <!-- Input Box Fixed at Bottom -->
+        <form action="/aichat" method="POST" class="w-full max-w-2xl mx-auto pb-6 bg-transparent sticky bottom-0 z-10">
+            <div class="flex gap-2">
+                <input type="text" name="prompt" placeholder="Ask something..."
+                    class="flex-1 p-2 rounded border border-gray-300" required />
+                <button type="submit" class="px-4 py-2 bg-purple-700 text-white rounded">Send</button>
+            </div>
+        </form>
+
+        <!-- Optional circle in top right corner -->
+        <div
+            class="absolute top-6 right-6 w-14 h-14 rounded-full border border-purple-400 bg-gradient-to-tr from-transparent to-purple-600 opacity-70 pointer-events-none select-none">
+        </div>
+    </main>
+
+
+
+    <script>
+        const links = document.querySelectorAll('.nav-link');
+        const currentPath = window.location.pathname;
+
+        links.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
